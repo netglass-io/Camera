@@ -56,7 +56,24 @@ You have complete flexibility in how to use this work:
 - USB webcam connected (will appear as `/dev/video0`)
 - Target device: Jetson AGX Orin (or similar Linux system)
 
-### Deploy on Jetson Device
+### Option 1: Use Pre-Built Container (Recommended)
+
+The container is automatically built and published to GitHub Container Registry:
+
+```bash
+# Pull the latest image
+docker pull ghcr.io/netglass-io/camera:latest
+
+# Or use docker-compose with the pre-built image
+# Edit docker-compose.yml to use:
+#   image: ghcr.io/netglass-io/camera:latest
+# instead of:
+#   build: .
+
+docker compose up -d
+```
+
+### Option 2: Build Locally
 
 ```bash
 # Clone repository
@@ -64,13 +81,15 @@ git clone https://github.com/netglass-io/Camera.git
 cd Camera
 
 # Build and run
+docker compose build
 docker compose up -d
 
 # View logs
 docker compose logs -f
 
 # Access web interface
-# http://<device-ip>:5500
+# http://<device-ip>:5501 (Docker)
+# http://<device-ip>:5500 (local Python)
 ```
 
 ### Stop Service
