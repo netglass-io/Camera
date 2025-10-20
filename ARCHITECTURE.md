@@ -511,7 +511,7 @@ Camera/
 - [ ] Documentation for robotics team
 
 ### Robotics Team Handoff
-- [ ] GitHub repo created (private)
+- [ ] GitHub repo created (public with MIT license)
 - [ ] README with setup instructions
 - [ ] Architecture document (this file)
 - [ ] Integration guide for Node connection

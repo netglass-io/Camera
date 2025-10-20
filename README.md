@@ -398,8 +398,9 @@ Please document answers in GitHub Issues or initial planning meeting notes.
 
 ## License
 
-Private repository - Noblelift Fleet Management System
-© 2025 NetGlass.io - All Rights Reserved
+MIT License - see [LICENSE](LICENSE) file for details.
+
+This is an open-source demo/reference implementation. Feel free to use, modify, and distribute.
 
 ---
 

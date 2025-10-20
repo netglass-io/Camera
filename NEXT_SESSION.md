@@ -5,7 +5,7 @@ Implement working camera demo with face detection on agx1 Jetson device.
 
 ## Prerequisites Completed ✅
 1. ✅ GitHub repository created: https://github.com/netglass-io/Camera
-2. ✅ Repository is private (IP protection)
+2. ✅ Repository is public with MIT license
 3. ✅ Architecture documented in ARCHITECTURE.md
 4. ✅ Quick start guide in README.md
 5. ✅ Git initialized and pushed to GitHub
