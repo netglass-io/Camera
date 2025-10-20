@@ -45,6 +45,7 @@ Camera/
 ├── README.md                # Quick start + team guidance
 ├── NEXT_SESSION.md          # Implementation roadmap
 ├── CLAUDE-HANDOFF.md        # This handoff document
+├── NVIDIA-RESOURCES.md      # NVIDIA Jetson examples and references
 ├── LICENSE                  # MIT License
 └── .gitignore              # Python/Docker gitignore
 
@@ -97,6 +98,15 @@ cd Camera
 - Docker and Docker Compose (already installed)
 - Python 3.11 (for local testing before containerization)
 - Text editor (vim, nano, or VS Code remote)
+
+#### 4. NVIDIA Reference Examples
+**IMPORTANT**: See `NVIDIA-RESOURCES.md` for official NVIDIA examples and best practices:
+- **dusty-nv/jetson-inference** - Recommended Docker setup with camera examples
+- **NVIDIA DeepStream SDK** - Production-grade alternative
+- **Hardware acceleration** - How to enable GPU acceleration in containers
+- **Docker best practices** - Proper device mounting and runtime configuration
+
+These resources provide proven approaches for Jetson camera containers that we can reference or adopt if our simple Python approach has performance issues.
 
 ### Implementation Order
 
