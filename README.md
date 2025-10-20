@@ -7,6 +7,9 @@
 ### Current Status
 **This demo is NOT currently functional.** It contains architecture documentation and design patterns, but the implementation code (app.py, Dockerfile, etc.) has not yet been created.
 
+### Repository Visibility
+This repository is currently **public** for quick and easy distribution. If you prefer to work in a private repository, we can change the visibility at any time. Just let us know your preference.
+
 ### Purpose of This Repository
 This repository provides an **example architecture** for displaying post-processed camera video streams in a web browser interface. The goal is to demonstrate one possible approach for:
 - Streaming processed video to a web UI
