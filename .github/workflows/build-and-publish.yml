@@ -81,6 +81,17 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Make Package Public
+        run: |
+          # Set package visibility to public
+          curl -L \
+            -X PATCH \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/orgs/netglass-io/packages/container/camera \
+            -d '{"visibility":"public"}'
+
       - name: Image Details
         run: |
           echo "### Container Published Successfully! :rocket:" >> $GITHUB_STEP_SUMMARY
@@ -95,3 +106,4 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Platforms:** linux/amd64, linux/arm64" >> $GITHUB_STEP_SUMMARY
+          echo "**Visibility:** Public" >> $GITHUB_STEP_SUMMARY
