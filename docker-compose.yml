@@ -1,0 +1,54 @@
+version: '3.8'
+
+# ============================================================================
+# NVIDIA Jetson GPU Configuration
+# ============================================================================
+# For detailed explanation of GPU settings, see: JETSON-GPU.md
+# Official NVIDIA tutorial: https://developer.nvidia.com/embedded/learn/tutorials/jetson-container
+# TL;DR: runtime: nvidia is REQUIRED for GPU access on Jetson devices
+# ============================================================================
+
+services:
+  camera-demo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: camera-demo
+    restart: unless-stopped
+
+    # CRITICAL: NVIDIA GPU runtime for Jetson devices
+    # This MUST be set to "nvidia" to enable GPU acceleration on Jetson
+    # Without this, CUDA/TensorRT will not work, and GPU-based CV models will fail
+    # Reference: riva-speech container on agx1 uses runtime: nvidia
+    # See: docker inspect riva-speech | grep Runtime
+    # Official docs: https://developer.nvidia.com/embedded/learn/tutorials/jetson-container
+    runtime: nvidia
+
+    ports:
+      - "5501:5500"
+
+    devices:
+      # Camera device passthrough
+      - /dev/video0:/dev/video0
+
+    environment:
+      - CAMERA_DEVICE=/dev/video0
+      - TARGET_FPS=30
+      - FLASK_ENV=production
+
+      # NVIDIA GPU environment variables (optional, but recommended)
+      # These ensure GPU is visible and properly configured
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+
+    volumes:
+      # Optional: Mount logs directory for persistence
+      - ./logs:/app/logs
+
+    network_mode: bridge
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

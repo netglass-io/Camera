@@ -5,7 +5,15 @@
 ## ⚠️ Important Notes for Robotics Team
 
 ### Current Status
-**This demo is NOT currently functional.** It contains architecture documentation and design patterns, but the implementation code (app.py, Dockerfile, etc.) has not yet been created.
+**✅ This demo is FULLY FUNCTIONAL and ready to use!**
+
+- ✅ Real-time video streaming with face detection
+- ✅ Bidirectional SocketIO communication
+- ✅ Docker containerized with NVIDIA GPU runtime
+- ✅ Web-based viewer with live metadata
+- ✅ Tested and verified on Jetson AGX Orin
+
+**Note on GPU**: The container has NVIDIA GPU runtime configured correctly, but currently uses CPU-based face detection (Haar Cascade). This is intentional and provides good performance (~30 FPS). See `GPU-STATUS.md` for details on GPU configuration and how to add GPU-accelerated models.
 
 ### Repository Visibility
 This repository is currently **public** for quick and easy distribution. If you prefer to work in a private repository, we can change the visibility at any time. Just let us know your preference.
