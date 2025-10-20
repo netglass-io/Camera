@@ -80,9 +80,17 @@ Create working demo with:
 ### Prerequisites on AGX1
 
 #### 1. Hardware
-- USB webcam connected at `/dev/video0`
-- Verify with: `ls -la /dev/video*`
-- User `nodemin` in `video` group for camera access
+- **USB Webcam**: Logitech Webcam C210 connected at `/dev/video0`
+- **Resolution**: 640x480 (can do up to 1280x720)
+- **Status**: ✅ Tested and working with OpenCV 4.8.0
+- **Permissions**: ✅ `nodemin` user already in `video` group
+- **Test Results**:
+  ```
+  Camera opened: True
+  Frame read: True
+  Frame shape: (480, 640, 3)
+  ```
+- Verify with: `ls -la /dev/video*` (shows `/dev/video0` and `/dev/video1`)
 
 #### 2. Repository Clone
 ```bash
