@@ -2,6 +2,42 @@
 
 > Real-time camera processing with face detection, video streaming, and bidirectional browser communication for robotics integration.
 
+## ⚠️ Important Notes for Robotics Team
+
+### Current Status
+**This demo is NOT currently functional.** It contains architecture documentation and design patterns, but the implementation code (app.py, Dockerfile, etc.) has not yet been created.
+
+### Purpose of This Repository
+This repository provides an **example architecture** for displaying post-processed camera video streams in a web browser interface. The goal is to demonstrate one possible approach for:
+- Streaming processed video to a web UI
+- Sending metadata alongside video (detection results, coordinates, etc.)
+- Receiving commands from the browser (start/stop, adjust settings, etc.)
+
+### How to Use This Repository
+
+You have complete flexibility in how to use this work:
+
+1. **Use as your primary repo** - If this architecture is helpful, feel free to develop directly in this repository
+2. **Use as reference only** - Take the concepts and implement your own solution differently
+3. **Propose changes** - All architecture decisions (Python vs C++, MJPEG vs WebRTC, Flask vs other frameworks) are **open for discussion and change**
+
+**The only requirement**: Provide a way to display post-processed camera feeds in a web browser that can eventually integrate with the Node driver interface.
+
+### What's Open for Debate
+- Programming language (Python, C++, Rust, etc.)
+- Video streaming method (MJPEG, WebRTC, HLS, etc.)
+- Communication protocol (SocketIO, SignalR, plain WebSockets, etc.)
+- Detection algorithms (face detection is just a placeholder)
+- Deployment approach (Docker, native binary, ROS nodes, etc.)
+- Everything else!
+
+### What Matters
+- Displaying processed video in a browser
+- Low latency for real-time driver guidance
+- Ability to integrate with Node UI eventually (iframe, API, or other method)
+
+---
+
 ## Quick Start
 
 ### Prerequisites
@@ -32,16 +68,16 @@ docker compose logs -f
 docker compose down
 ```
 
-## What This Demo Provides
+## What This Demo Will Provide (Once Implemented)
 
-### Features
-✅ **Real-time video streaming** - MJPEG stream from USB webcam
-✅ **Face detection** - OpenCV Haar cascade with bounding boxes
-✅ **Bidirectional communication** - WebSocket (SocketIO) for metadata and commands
-✅ **Browser-based viewer** - HTML5 with canvas overlay
-✅ **Performance metrics** - FPS, processing time, frame drops
-✅ **Interactive controls** - Start/stop, sensitivity adjustment
-✅ **Docker containerized** - Easy deployment and reproducibility
+### Planned Features
+- **Real-time video streaming** - MJPEG stream from USB webcam (or alternative method)
+- **Face detection** - OpenCV Haar cascade with bounding boxes (placeholder for your detection algorithm)
+- **Bidirectional communication** - WebSocket (SocketIO) for metadata and commands
+- **Browser-based viewer** - HTML5 with canvas overlay
+- **Performance metrics** - FPS, processing time, frame drops
+- **Interactive controls** - Start/stop, sensitivity adjustment
+- **Docker containerized** - Easy deployment and reproducibility
 
 ### Architecture
 
