@@ -1,0 +1,39 @@
+# ============================================================================
+# Local Development Configuration (no GPU)
+# ============================================================================
+# Use this file for local development on machines without NVIDIA GPUs
+# Run with: docker compose -f docker-compose.local.yml up -d --build
+# ============================================================================
+
+services:
+  camera-demo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: camera-demo
+    restart: unless-stopped
+
+    ports:
+      - "5501:5500"
+
+    devices:
+      # Camera device passthrough - Logitech C922 Pro Stream Webcam ONLY
+      - /dev/video2:/dev/video0
+      - /dev/video3:/dev/video1
+
+    environment:
+      - CAMERA_DEVICE=/dev/video0
+      - TARGET_FPS=30
+      - FLASK_ENV=production
+
+    volumes:
+      # Optional: Mount logs directory for persistence
+      - ./logs:/app/logs
+
+    network_mode: bridge
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

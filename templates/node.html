@@ -3,103 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Node Integration Demo - Camera Service</title>
+    <title>Node - Camera Display</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            margin: 0;
-            padding: 20px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f5f5f5;
+            background-color: #0a0a0a;
+            color: #d7d7d7;
+            overflow: hidden;
         }
 
-        .header {
-            background-color: #2c3e50;
-            color: white;
+        .page {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 12vw;
+            min-width: 230px;
+            background-color: #0f0f0f;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            background-color: rgba(0,0,0,0.4);
             padding: 15px 20px;
-            margin: -20px -20px 20px -20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-height: 4.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .header h1 {
-            margin: 0;
+        .logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            background-color: #1c1c1c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
             font-size: 24px;
+            color: #ff9900;
         }
 
-        .header p {
-            margin: 5px 0 0 0;
-            font-size: 14px;
-            opacity: 0.8;
+        .nav-menu {
+            flex: 1;
+            overflow-y: auto;
+            padding-top: 1rem;
         }
 
-        .info-box {
-            background-color: #e8f4f8;
-            border-left: 4px solid #3498db;
-            padding: 15px;
-            margin-bottom: 20px;
+        .nav-item {
+            padding: 0.5rem 0;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            height: 5rem;
+            color: #d7d7d7;
+            text-decoration: none;
             border-radius: 4px;
+            font-size: clamp(22px, 1.3vw, 32px);
+            transition: all 0.2s;
         }
 
-        .info-box h3 {
-            margin-top: 0;
-            color: #2980b9;
-            font-size: 16px;
+        .nav-link:hover {
+            background-color: #ff9900;
+            color: #000;
         }
 
-        .info-box p {
-            margin: 5px 0;
+        .nav-link.active {
+            background-color: #ff9900;
+            color: #000;
+        }
+
+        .nav-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.75rem;
+        }
+
+        /* Main Content Area */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Camera Container - Full size like MHEV */
+        .camera-container {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .camera-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .version {
+            position: fixed;
+            bottom: 0;
+            left: 250px;
+            padding: 10px;
+            font-size: 12px;
+            color: #666;
+            background-color: rgba(10, 10, 10, 0.8);
+        }
+
+        /* Info Banner - Only shows on this demo page */
+        .demo-info {
+            background-color: #1c1c1c;
+            border-left: 4px solid #ff9900;
+            padding: 12px 20px;
+            margin: 0;
             font-size: 14px;
             line-height: 1.6;
         }
 
-        .info-box code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
+        .demo-info strong {
+            color: #ff9900;
+        }
+
+        .demo-info code {
+            background-color: #0a0a0a;
+            padding: 2px 8px;
             border-radius: 3px;
             font-family: 'Courier New', monospace;
             font-size: 13px;
-            color: #e74c3c;
-        }
-
-        .iframe-container {
-            background-color: white;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .iframe-container iframe {
-            width: 100%;
-            height: 800px;
-            border: none;
-            display: block;
-        }
-
-        @media (max-width: 768px) {
-            .iframe-container iframe {
-                height: 600px;
-            }
+            color: #4a9eff;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Node Integration Demo</h1>
-        <p>Example of how Node driver interface would embed the camera service</p>
-    </div>
+    <div class="page">
+        <!-- Sidebar Navigation (matches Node UI) -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">N1</div>
+            </div>
 
-    <div class="info-box">
-        <h3>📋 Integration Pattern</h3>
-        <p>
-            This page demonstrates how the Node driver interface would embed the camera processing service.
-            In production, Node would use a similar iframe approach or a SignalR bridge for tighter integration.
-        </p>
-        <p><strong>Node Blazor Component Example:</strong></p>
-        <p><code>&lt;iframe src="http://localhost:5500/" width="100%" height="800px"&gt;&lt;/iframe&gt;</code></p>
-    </div>
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <a class="nav-link" href="#">
+                        <svg class="nav-icon" fill="white" viewBox="0 0 16 16">
+                            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                </div>
 
-    <div class="iframe-container">
-        <iframe src="/" title="Camera Processing Service"></iframe>
+                <div class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <svg class="nav-icon" fill="white" viewBox="0 0 16 16">
+                            <path d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z"/>
+                        </svg>
+                        Camera
+                    </a>
+                </div>
+
+                <div class="nav-item">
+                    <a class="nav-link" href="#">
+                        <svg class="nav-icon" fill="white" viewBox="0 0 16 16">
+                            <path d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z"/>
+                        </svg>
+                        Settings
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main>
+            <div class="content">
+                <!-- Demo Info Banner -->
+                <div class="demo-info">
+                    <strong>🎯 Node Integration Demo</strong> — This page simulates how the Camera application appears within the Node driver interface.
+                    <br><br>
+                    <strong>Integration Code:</strong> <code>&lt;iframe src="http://localhost:5501/" width="100%" height="100%"&gt;&lt;/iframe&gt;</code>
+                    <br><br>
+                    <strong>Target Display:</strong> 2160×1440px (AGX forklift display)
+                    <br>
+                    <strong>Iframe Size:</strong> ~1850px wide × 1440px tall (after sidebar: 12vw ≈ 259px)
+                    <br>
+                    <strong>Layout:</strong> Responsive (100% width/height) - your app should adapt to available space
+                </div>
+
+                <!-- Camera Display (Full Size) -->
+                <div class="camera-container">
+                    <iframe
+                        src="/"
+                        class="camera-iframe"
+                        title="Camera Processing Service"
+                        frameborder="0">
+                    </iframe>
+                </div>
+            </div>
+
+            <div class="version">Demo v1.0.0</div>
+        </main>
     </div>
 </body>
 </html>

@@ -2,6 +2,17 @@
 
 > Real-time camera processing with face detection, video streaming, and bidirectional browser communication for robotics integration.
 
+## 🎯 See It In Action
+
+**Want to see how this integrates with Node?**
+
+Visit **[http://localhost:5501/node](http://localhost:5501/node)** after starting the container to see a live demonstration of how the Camera application appears embedded within the Node driver interface.
+
+This demo page shows:
+- The Camera app running in an iframe (just like in production Node)
+- Node-style navigation sidebar
+- Full-screen iframe layout matching the actual deployment
+
 ## ⚠️ Important Notes for Robotics Team
 
 ### Current Status
@@ -11,6 +22,7 @@
 - ✅ Bidirectional SocketIO communication
 - ✅ Docker containerized with NVIDIA GPU runtime
 - ✅ Web-based viewer with live metadata
+- ✅ **Node integration demo at /node**
 - ✅ Tested and verified on Jetson AGX Orin
 
 **Note on GPU**: The container has NVIDIA GPU runtime configured correctly, but currently uses CPU-based face detection (Haar Cascade). This is intentional and provides good performance (~30 FPS). See `GPU-STATUS.md` for details on GPU configuration and how to add GPU-accelerated models.
